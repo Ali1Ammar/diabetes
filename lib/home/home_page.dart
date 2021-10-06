@@ -16,36 +16,41 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cont =  ref.watch(homeContProvider);
+    final cont = ref.watch(homeContProvider);
     final state = cont.state;
-    return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.add),
-      // ),
-      body: state.map<Widget>(
-          init: (_) => const CenterLoading(),
-          loading: (_) => const CenterLoading(),
-          loaded: (loaded) {
-            final data = loaded.data;
-            final length = data.data.length;
-            // final reversed = data.data.reversed;
-            return CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: buildAvgMainCard(data)),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverFiexdHeaderDelegate(
-                      child: buildFixedTitleCard(ref,!cont.isLastEmpty ), height: 50),
-                ),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate((context, i) {
-                  final e = data.data.elementAt(length - i - 1);
-                  return buildItem(ref, data, e);
-                }, childCount: length)),
-              ],
-            );
-          }),
+    return SafeArea(
+      child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {},
+        //   child: const Icon(Icons.add),
+        // ),
+        body: state.map<Widget>(
+            init: (_) => const CenterLoading(),
+            loading: (_) => const CenterLoading(),
+            loaded: (loaded) {
+              final data = loaded.data;
+              final length = data.data.length;
+              final isEmpty = length == 0 || (length == 1 && cont.isLastEmpty);
+              // final reversed = data.data.reversed;
+              return CustomScrollView(
+                slivers: [
+                  if (!isEmpty)
+                    SliverToBoxAdapter(child: buildAvgMainCard(data)),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverFiexdHeaderDelegate(
+                        child: buildFixedTitleCard(ref, !cont.isLastEmpty),
+                        height: 50),
+                  ),
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate((context, i) {
+                    final e = data.data.elementAt(length - i - 1);
+                    return buildItem(ref, data, e);
+                  }, childCount: length)),
+                ],
+              );
+            }),
+      ),
     );
   }
 
@@ -103,7 +108,6 @@ class HomePage extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  
                   Row(
                     children: [
                       const Text('معدل : '),
@@ -124,18 +128,21 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Card buildFixedTitleCard(WidgetRef ref,bool enableAdd) {
+  Card buildFixedTitleCard(WidgetRef ref, bool enableAdd) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-          if(enableAdd)  InkWell(
-                onTap: () {
-                  ref.read(homeContProvider.notifier).addNewRead();
-                },
-                child: const Icon(Icons.add)),
+            if (enableAdd)
+              InkWell(
+                  onTap: () {
+                    ref.read(homeContProvider.notifier).addNewRead();
+                  },
+                  child: const Icon(Icons.add))
+            else
+              const SizedBox(),
             const Text('فطور'),
             const Text('الغداء'),
             const Text('العشاء'),
@@ -151,20 +158,12 @@ class HomePage extends ConsumerWidget {
     return Card(
         child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
+      child: Wrap(
+        spacing: 10,
         children: [
-          Flexible(
-            child: Wrap(
-              spacing: 10,
-              children: [
-                Text('معدل شهر كامل : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-                Text(
-                    'معدل ثلاث اشهر  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-                Text(
-                    'معدل كل القراءات  : ${data.allAvg.avg.toStringAsFixed(3)}'),
-              ],
-            ),
-          ),
+          Text('معدل شهر كامل : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text('معدل ثلاث اشهر  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text('معدل كل القراءات  : ${data.allAvg.avg.toStringAsFixed(3)}'),
         ],
       ),
     ));

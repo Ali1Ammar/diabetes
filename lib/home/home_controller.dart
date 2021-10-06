@@ -4,6 +4,7 @@ import 'package:diabetes/modal/reader_type.dart';
 import 'package:diabetes/modal/with_avg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 final homeContProvider = ChangeNotifierProvider<HomeController>(
     (ref) => HomeController(ref.read)..getData());
@@ -29,7 +30,7 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  bool get isLastEmpty => (state as HomeLoaded).data.data.last.data.isEmpty;
+  bool get isLastEmpty => (state as HomeLoaded).data.data.lastOrNull?.data.isEmpty ??false;
 
   void addItemToRead(DateTime? readId, int numb, ReaderType type,
       bool isEditItem, Map<ReaderType, ReadItemData> allItems) async {
