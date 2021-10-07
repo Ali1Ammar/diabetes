@@ -53,17 +53,17 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   if (!isEmpty)
-                    SliverToBoxAdapter(child: buildAvgMainCard(data)),
+                    SliverToBoxAdapter(child: buildAvgMainCard(context,data)),
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: SliverFiexdHeaderDelegate(
-                        child: buildFixedTitleCard(ref, !cont.isLastEmpty),
+                        child: buildFixedTitleCard(context,ref, !cont.isLastEmpty),
                         height: 50),
                   ),
                   SliverList(
                       delegate: SliverChildBuilderDelegate((context, i) {
                     final e = data.data.elementAt(length - i - 1);
-                    return buildItem(ref, data, e);
+                    return buildItem(context,ref, data, e);
                   }, childCount: length)),
                 ],
               );
@@ -73,6 +73,7 @@ class HomePage extends ConsumerWidget {
   }
 
   buildItem(
+    BuildContext context,
       WidgetRef ref,
       ResultWithAvg<List<CalcWithAvg<Map<ReaderType, ReadItemData>>>> data,
       CalcWithAvg<Map<ReaderType, ReadItemData>> e) {
@@ -96,7 +97,7 @@ class HomePage extends ConsumerWidget {
             height: 10,
           ),
           RowItems(
-            title: 'قبل',
+            title: AppLocalizations.of(context)!.before ,
             data: items,
             types: const [
               ReaderType.beforeBreakfast,
@@ -110,7 +111,7 @@ class HomePage extends ConsumerWidget {
             height: 10,
           ),
           RowItems(
-            title: 'بعد',
+            title: AppLocalizations.of(context)!.after  ,
             onAddOrEdit: onAddOrEdit,
             data: items,
             types: const [
@@ -128,14 +129,14 @@ class HomePage extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      const Text('معدل : '),
+                       Text('${AppLocalizations.of(context)!.avg} : '),
                       Text(e.avg.toStringAsFixed(3)),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('تاريخ : '),
-                      Text(DateFormat('dd / MM EEEE', 'ar').format((date)))
+                       Text('${AppLocalizations.of(context)!.date } : '),
+                      Text(DateFormat('dd / MM EEEE', AppLocalizations.of(context)!.localeName  ).format((date)))
                     ],
                   ),
                 ],
@@ -146,7 +147,7 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Card buildFixedTitleCard(WidgetRef ref, bool enableAdd) {
+  Card buildFixedTitleCard(BuildContext context, WidgetRef ref, bool enableAdd) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -161,17 +162,17 @@ class HomePage extends ConsumerWidget {
                   child: const Icon(Icons.add))
             else
               const SizedBox(),
-            const Text('فطور'),
-            const Text('الغداء'),
-            const Text('العشاء'),
-            const Text('نوم')
+             Text( AppLocalizations.of(context)!.breakfast  ),
+             Text( AppLocalizations.of(context)!.dinner  ),
+             Text( AppLocalizations.of(context)!.lunch  ),
+            Text( AppLocalizations.of(context)!.sleep  )
           ].map((e) => Expanded(child: Center(child: e))).toList(),
         ),
       ),
     );
   }
 
-  Card buildAvgMainCard(
+  Card buildAvgMainCard(BuildContext context,
       ResultWithAvg<List<CalcWithAvg<Map<ReaderType, ReadItemData>>>> data) {
     return Card(
         child: Padding(
@@ -179,9 +180,9 @@ class HomePage extends ConsumerWidget {
       child: Wrap(
         spacing: 10,
         children: [
-          Text('معدل شهر كامل : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-          Text('معدل ثلاث اشهر  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-          Text('معدل كل القراءات  : ${data.allAvg.avg.toStringAsFixed(3)}'),
+          Text('${AppLocalizations.of(context)!.onemonthavg } : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text('${AppLocalizations.of(context)!.threemonthavg }  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text('${AppLocalizations.of(context)!.allavg }  : ${data.allAvg.avg.toStringAsFixed(3)}'),
         ],
       ),
     ));

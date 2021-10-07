@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 showDeleteDialog(BuildContext context, VoidCallback onYes) => showDialog(
     context: context,
     builder: (context) => AlertDialog(
-          content: const Text('هل انت متاكد من حذف جميع البيانات'),
+          content:  Text(AppLocalizations.of(context)!.areyousuredelete  ),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('الغاء')),
+                child:  Text(AppLocalizations.of(context)!.yesdelete )),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
@@ -18,6 +19,6 @@ showDeleteDialog(BuildContext context, VoidCallback onYes) => showDialog(
 
                   onYes();
                 },
-                child: const Text('نعم احذف'))
+                child:  Text(AppLocalizations.of(context)!.cancel ))
           ],
         ));

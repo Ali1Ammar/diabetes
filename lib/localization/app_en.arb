@@ -1,3 +1,26 @@
 {
-  "appTitle": "diabetes treacker"
+  "appTitle": "diabetes treacker",
+    "before": "before",
+  "after": "after",
+  "dinner": "dinner",
+  "lunch": "lunch",
+  "breakfast": "breakfast",
+  "sleep": "sleep",
+  "date":"date",
+  "avg": "average",
+  "threemonthavg": "average for three month",
+  "onemonthavg": "average for one month",
+  "allavg":"average for all data",
+  "enter":"enter",
+  "save":"save",
+  "areyousuredelete":"are you sure you want to delete all data ?",
+  "cancel":"cancel",
+  "yesdelete": "yes, delete all data",
+  "afterBreakfast":"after breakfast",
+  "afterDinner": "after dinner",
+  "afterLunch": "after lunch",
+  "beforeBreakfast":"before breakfast",
+  "beforeDinner": "before dinner" ,
+  "beforeLunch": "before lunch",
+  "beforeSleep": "before sleep"
 }

@@ -1,3 +1,26 @@
 {
-  "appTitle": "تتبع السكري"
+  "appTitle": "تتبع السكري",
+  "before": "قبل",
+  "after": "بعد",
+  "dinner": "العشاء",
+  "lunch": "الغداء",
+  "breakfast": "الفطور",
+  "sleep": "النوم",
+  "date":"التاريخ",
+  "avg": "المعدل",
+  "threemonthavg": "معدل لثلاث اشهر",
+  "onemonthavg": "معدل لاخر شهر",
+  "allavg":"معدل لكل بيانات",
+  "enter":"ادخال",
+  "save":"حفظ",
+  "areyousuredelete":"هل انت متاكد من حذف جميع البيانات",
+  "cancel":"الغاء",
+  "yesdelete": "نعم احذف",
+  "afterBreakfast":"بعد الفطور",
+  "afterDinner": "بعد العشاء",
+  "afterLunch": "بعد الغداء",
+  "beforeBreakfast":"قبل الفطور",
+  "beforeDinner": "قبل العشاء" ,
+  "beforeLunch": "قبل الغداء",
+  "beforeSleep": "قبل النوم"
 }

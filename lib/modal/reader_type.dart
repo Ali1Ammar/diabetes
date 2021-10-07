@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:moor/moor.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ReaderType {
   beforeBreakfast,
@@ -13,7 +15,32 @@ enum ReaderType {
 
 extension ReaderTypeConvertExt on ReaderType {
   String toJson() => typeToStringMap[this]!;
-  String toArabic() => typeToArabicMap[this]!;
+  String toRead(BuildContext context) {
+    switch (this) {
+      case ReaderType.beforeBreakfast:
+        return AppLocalizations.of(context)!.beforeBreakfast;
+      case ReaderType.afterBreakfast:
+        return AppLocalizations.of(context)!.afterBreakfast;
+
+      case ReaderType.beforeLunch:
+        return AppLocalizations.of(context)!.beforeLunch;
+
+      case ReaderType.afterLunch:
+        return AppLocalizations.of(context)!.afterLunch;
+
+      case ReaderType.beforeDinner:
+        return AppLocalizations.of(context)!.beforeDinner;
+
+      case ReaderType.afterDinner:
+        return AppLocalizations.of(context)!.afterDinner;
+
+      case ReaderType.beforeSleep:
+        return AppLocalizations.of(context)!.beforeSleep;
+
+      case ReaderType.empty:
+        return "empty";
+    }
+  }
 }
 
 ReaderType genderTypeFromString(String type) => stringToTypeMap[type]!;
@@ -38,7 +65,7 @@ const typeToStringMap = {
   ReaderType.beforeSleep: "beforeSleep",
 };
 
-const typeToArabicMap = {
+const typeToReadMap = {
   ReaderType.afterBreakfast: "بعد الفطور",
   ReaderType.afterDinner: "بعد الغداء",
   ReaderType.afterLunch: "بعد العشاء",
