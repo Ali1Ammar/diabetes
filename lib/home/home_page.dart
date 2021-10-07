@@ -5,6 +5,7 @@ import 'package:diabetes/helper/widget/show_delete_dialog.dart';
 import 'package:diabetes/home/home_controller.dart';
 import 'package:diabetes/home/rowitem.dart';
 import 'package:diabetes/main/dark_light_controller.dart';
+import 'package:diabetes/main/localizations_controller.dart';
 import 'package:diabetes/modal/reader_type.dart';
 import 'package:diabetes/modal/with_avg.dart';
 import 'package:flutter/material.dart';
@@ -46,24 +47,49 @@ class HomePage extends ConsumerWidget {
                             onPressed: () {
                               ref.read(darkModeProvider.notifier).toggle();
                             },
-                            icon: Theme.of(context).brightness==Brightness.dark ? const Icon(Icons.brightness_3 ) :
-                             const Icon(Icons.brightness_6 )
-                              )
+                            icon:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? const Icon(Icons.brightness_3)
+                                    : const Icon(Icons.brightness_6)),
+                        PopupMenuButton<Locale>(
+                            onSelected: (val) {
+                              ref
+                                  .read(localizationsProvider.notifier)
+                                  .setTo(val.languageCode);
+                            },
+                            child: Center(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                AppLocalizations.of(context)!.localeName,
+                                style: Theme.of(context)
+                                    .appBarTheme
+                                    .titleTextStyle,
+                              ),
+                            )),
+                            itemBuilder: (context) =>
+                                LocalizationsController.supported
+                                    .map((e) => PopupMenuItem(
+                                          child: Text(e.languageCode),
+                                          value: e,
+                                        ))
+                                    .toList())
                       ],
                     ),
                   ),
                   if (!isEmpty)
-                    SliverToBoxAdapter(child: buildAvgMainCard(context,data)),
+                    SliverToBoxAdapter(child: buildAvgMainCard(context, data)),
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: SliverFiexdHeaderDelegate(
-                        child: buildFixedTitleCard(context,ref, !cont.isLastEmpty),
+                        child: buildFixedTitleCard(
+                            context, ref, !cont.isLastEmpty),
                         height: 50),
                   ),
                   SliverList(
                       delegate: SliverChildBuilderDelegate((context, i) {
                     final e = data.data.elementAt(length - i - 1);
-                    return buildItem(context,ref, data, e);
+                    return buildItem(context, ref, data, e);
                   }, childCount: length)),
                 ],
               );
@@ -73,7 +99,7 @@ class HomePage extends ConsumerWidget {
   }
 
   buildItem(
-    BuildContext context,
+      BuildContext context,
       WidgetRef ref,
       ResultWithAvg<List<CalcWithAvg<Map<ReaderType, ReadItemData>>>> data,
       CalcWithAvg<Map<ReaderType, ReadItemData>> e) {
@@ -97,7 +123,7 @@ class HomePage extends ConsumerWidget {
             height: 10,
           ),
           RowItems(
-            title: AppLocalizations.of(context)!.before ,
+            title: AppLocalizations.of(context)!.before,
             data: items,
             types: const [
               ReaderType.beforeBreakfast,
@@ -111,7 +137,7 @@ class HomePage extends ConsumerWidget {
             height: 10,
           ),
           RowItems(
-            title: AppLocalizations.of(context)!.after  ,
+            title: AppLocalizations.of(context)!.after,
             onAddOrEdit: onAddOrEdit,
             data: items,
             types: const [
@@ -129,14 +155,16 @@ class HomePage extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                       Text('${AppLocalizations.of(context)!.avg} : '),
+                      Text('${AppLocalizations.of(context)!.avg} : '),
                       Text(e.avg.toStringAsFixed(3)),
                     ],
                   ),
                   Row(
                     children: [
-                       Text('${AppLocalizations.of(context)!.date } : '),
-                      Text(DateFormat('dd / MM EEEE', AppLocalizations.of(context)!.localeName  ).format((date)))
+                      Text('${AppLocalizations.of(context)!.date} : '),
+                      Text(DateFormat('dd / MM EEEE',
+                              AppLocalizations.of(context)!.localeName)
+                          .format((date)))
                     ],
                   ),
                 ],
@@ -147,7 +175,8 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Card buildFixedTitleCard(BuildContext context, WidgetRef ref, bool enableAdd) {
+  Card buildFixedTitleCard(
+      BuildContext context, WidgetRef ref, bool enableAdd) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -162,10 +191,10 @@ class HomePage extends ConsumerWidget {
                   child: const Icon(Icons.add))
             else
               const SizedBox(),
-             Text( AppLocalizations.of(context)!.breakfast  ),
-             Text( AppLocalizations.of(context)!.dinner  ),
-             Text( AppLocalizations.of(context)!.lunch  ),
-            Text( AppLocalizations.of(context)!.sleep  )
+            Text(AppLocalizations.of(context)!.breakfast),
+            Text(AppLocalizations.of(context)!.dinner),
+            Text(AppLocalizations.of(context)!.lunch),
+            Text(AppLocalizations.of(context)!.sleep)
           ].map((e) => Expanded(child: Center(child: e))).toList(),
         ),
       ),
@@ -180,9 +209,12 @@ class HomePage extends ConsumerWidget {
       child: Wrap(
         spacing: 10,
         children: [
-          Text('${AppLocalizations.of(context)!.onemonthavg } : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-          Text('${AppLocalizations.of(context)!.threemonthavg }  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
-          Text('${AppLocalizations.of(context)!.allavg }  : ${data.allAvg.avg.toStringAsFixed(3)}'),
+          Text(
+              '${AppLocalizations.of(context)!.onemonthavg} : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text(
+              '${AppLocalizations.of(context)!.threemonthavg}  : ${data.monthAvg.avg.toStringAsFixed(3)}'),
+          Text(
+              '${AppLocalizations.of(context)!.allavg}  : ${data.allAvg.avg.toStringAsFixed(3)}'),
         ],
       ),
     ));
