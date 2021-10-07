@@ -19,6 +19,9 @@ class HomeController extends ChangeNotifier {
   void getData() async {
     final data = await read(dbProvider).getAll();
     state = HomeState.loaded(data);
+    if (data.data.isEmpty) {
+      addNewRead();
+    }
     notifyListeners();
   }
 
@@ -30,7 +33,8 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  bool get isLastEmpty => (state as HomeLoaded).data.data.lastOrNull?.data.isEmpty ??false;
+  bool get isLastEmpty =>
+      (state as HomeLoaded).data.data.lastOrNull?.data.isEmpty ?? false;
 
   void addItemToRead(DateTime? readId, int numb, ReaderType type,
       bool isEditItem, Map<ReaderType, ReadItemData> allItems) async {
@@ -45,5 +49,11 @@ class HomeController extends ChangeNotifier {
     final newItem = ReadItemData(number: numb, type: type, startDate: readId);
     allItems[type] = newItem;
     notifyListeners();
+  }
+
+  Future<void> clearAll() async {
+    state = const HomeState.loading();
+    await read(dbProvider).deleteAll();
+    getData();
   }
 }

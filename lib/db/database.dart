@@ -67,6 +67,10 @@ class AppDb extends _$AppDb {
     await into(readItem).insert(data);
   }
 
+    Future<void> deleteAll() async {
+    await delete(readItem).go() ;
+  }
+
   Future<void> updateRead(
       DateTime startDate, ReaderType type, int number) async {
     await (update(readItem)

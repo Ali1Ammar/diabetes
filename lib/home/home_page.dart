@@ -1,14 +1,17 @@
 import 'package:diabetes/db/database.dart';
 import 'package:diabetes/helper/widget/center_loading.dart';
 import 'package:diabetes/helper/widget/fixed_header.dart';
+import 'package:diabetes/helper/widget/show_delete_dialog.dart';
 import 'package:diabetes/home/home_controller.dart';
 import 'package:diabetes/home/rowitem.dart';
+import 'package:diabetes/main/dark_light_controller.dart';
 import 'package:diabetes/modal/reader_type.dart';
 import 'package:diabetes/modal/with_avg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends ConsumerWidget {
   static const routeName = '/';
@@ -17,13 +20,10 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cont = ref.watch(homeContProvider);
+    // final themeMode = ref.read(darkModeProvider.notifier)
     final state = cont.state;
     return SafeArea(
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {},
-        //   child: const Icon(Icons.add),
-        // ),
         body: state.map<Widget>(
             init: (_) => const CenterLoading(),
             loading: (_) => const CenterLoading(),
@@ -31,9 +31,27 @@ class HomePage extends ConsumerWidget {
               final data = loaded.data;
               final length = data.data.length;
               final isEmpty = length == 0 || (length == 1 && cont.isLastEmpty);
-              // final reversed = data.data.reversed;
               return CustomScrollView(
                 slivers: [
+                  SliverToBoxAdapter(
+                    child: AppBar(
+                      title: Text(AppLocalizations.of(context)!.appTitle),
+                      actions: [
+                        IconButton(
+                            onPressed: () {
+                              showDeleteDialog(context, cont.clearAll);
+                            },
+                            icon: const Icon(Icons.delete_forever)),
+                        IconButton(
+                            onPressed: () {
+                              ref.read(darkModeProvider.notifier).toggle();
+                            },
+                            icon: Theme.of(context).brightness==Brightness.dark ? const Icon(Icons.brightness_3 ) :
+                             const Icon(Icons.brightness_6 )
+                              )
+                      ],
+                    ),
+                  ),
                   if (!isEmpty)
                     SliverToBoxAdapter(child: buildAvgMainCard(data)),
                   SliverPersistentHeader(

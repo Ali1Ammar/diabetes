@@ -1,6 +1,3 @@
 {
-  "appTitle": "السكر",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+  "appTitle": "تتبع السكري"
 }
