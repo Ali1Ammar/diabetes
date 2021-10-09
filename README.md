@@ -9,10 +9,11 @@ we use screenshot_modes to take screenshot with frame for the app
 and flutter_launcher_icons , flutter_native_splash to create a icon and splashscreen
 the icon desgin make using inkscape
 
-![main app](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/main.png?raw=true)
+<p align="center">
+  <img src="./photo/main.png?raw=true" width="350" title="main app">
+    <img src="/photo/clear.png?raw=true" width="350" title="add / edit dialog">
+  <img src="./photo/addedit.png?raw=true" width="350" title="remove all dialog">
 
-![add / edit dialog](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/clear.png?raw=true)
-
-![remove all dialog](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/addedit.png?raw=true)
+</p>
 
 
