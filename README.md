@@ -1,30 +1,18 @@
 # diabetes
 
-A new Flutter project.
+a flutter app for tracking diabetes read
 
-## Getting Started
+a very simple flutter app that use riverpod , moor , flutter_hooks , freezed to build one page app using to enter diabetes read
+we also use bulitin flutter_localizations to support both arabic and english lang
+and use riverpod to support changeing the lang and to change the theme mode (dark and light) 
+we use screenshot_modes to take screenshot with frame for the app
+and flutter_launcher_icons , flutter_native_splash to create a icon and splashscreen
+the icon desgin make using inkscape
 
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
+![main app](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/main.png?raw=true)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![add / edit dialog](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/clear.png?raw=true)
 
-## Assets
+![remove all dialog](https://github.com/[Ali1Ammar]/[diabetes]/blob/[master]/photo/addedit.png?raw=true)
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
 
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
-
-## Localization
-
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
