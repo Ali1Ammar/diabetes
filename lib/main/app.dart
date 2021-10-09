@@ -7,18 +7,24 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyApp extends StatelessWidget {
+  final Widget Function(
+    BuildContext context,
+    Widget? widget,
+  )? appBulder ;
   const MyApp({
-    Key? key,
+    Key? key, this.appBulder,
+  
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: Consumer(builder: (context, ref, _) {
+          child: Consumer(builder: (context, ref, _) {
         final themeMode = ref.watch(darkModeProvider);
         final localizations = ref.watch(localizationsProvider);
         return MaterialApp(
           restorationScopeId: 'app',
+          navigatorKey:  navigatorKey,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -34,8 +40,11 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           themeMode: themeMode,
           home: const HomePage(),
+           builder: appBulder,
         );
       }),
     );
   }
 }
+
+final GlobalKey<NavigatorState> navigatorKey =GlobalKey<NavigatorState>() ; 

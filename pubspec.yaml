@@ -27,6 +27,8 @@ dependencies:
   freezed_annotation: ^0.14.3
 
   shared_preferences:
+  device_preview: ^0.7.4
+  screenshot_modes: ^0.0.5
 
 dev_dependencies:
   flutter_test:
